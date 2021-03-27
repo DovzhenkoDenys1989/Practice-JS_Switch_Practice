@@ -2,10 +2,9 @@
 //Определите в какую декаду месяца попадает это число
 //(в первую, вторую или третью).
 
+const day = +prompt("Выберите число месяца: ");
 
-const day = +prompt ("Выберите число месяца: ");
-
-switch(day){
+switch (day) {
   case 1:
   case 2:
   case 3:
@@ -15,7 +14,7 @@ switch(day){
   case 7:
   case 8:
   case 9:
-  case 10:{
+  case 10: {
     console.log(day + " день -" + " 1-ая декада месяца");
     break;
   }
@@ -28,8 +27,8 @@ switch(day){
   case 17:
   case 18:
   case 19:
-  case 20:{
-    console.log(day +" день -" + " 2-ая декада месяца");
+  case 20: {
+    console.log(day + " день -" + " 2-ая декада месяца");
     break;
   }
   case 21:
@@ -42,60 +41,95 @@ switch(day){
   case 28:
   case 29:
   case 30:
-  case 31:{
+  case 31: {
     console.log(day + " день -" + " 3-я декада месяца");
     break;
   }
   default:
     console.log("Такого числа в месяце нет");
-    }
-
- 
+}
 
 //2. Напишите калькулятор. 2 Числа и операцию спрашивать у пользователя.
 
-
-const userInput = prompt("Выберите действие калькулятора:\n + (плюс)\n - (минус)\n * (умножение)\n / (деление)\n ** (возведение в степень)\n **/ (извлечь корень)\n % (процент) ");
+const userInput = prompt(
+  "Выберите действие калькулятора:\n + (плюс)\n - (минус)\n * (умножение)\n / (деление)\n ** (возведение в степень)\n **/ (извлечь корень)\n % (процент) "
+);
 const number1 = +prompt("Введите первое число: ");
 const number2 = +prompt("Введите второе число/степень/процент: ");
 
+const calculationResult = calculate(number1, number2, userInput);
+console.log(calculationResult);
 
-switch(userInput){
-  case "+":{
-    const resultPlus = number1 + number2;
-    console.log("Ответ: ", resultPlus);
-    break;
+function sum(a, b) {
+  return a + b;
+}
+
+function sub(a, b) {
+  return a - b;
+}
+
+function mul(a, b) {
+  return a * b;
+}
+
+function div(a, b) {
+  return a / b;
+}
+
+function power(a, b) {
+  return a ** b;
+}
+
+function root(a, b) {
+  return a ** (1 / b);
+}
+
+function percent(a, b) {
+  return a * (b / 100);
+}
+
+function calculate(number1, number2, userInput) {
+  const highOrderFunc = function (number1, number2, operationFunc) {
+    const result = operationFunc(number1, number2);
+    console.log(operationFunc);
+    return "Ответ:" + result;
+  };
+
+  let res = null;
+
+  switch (userInput) {
+    case "+": {
+      res = highOrderFunc(number1, number2, sum);
+      break;
+    }
+    case "-": {
+      res = highOrderFunc(number1, number2, sub);
+      break;
+    }
+    case "*": {
+      res = highOrderFunc(number1, number2, mul);
+      break;
+    }
+    case "/": {
+      res = highOrderFunc(number1, number2, div);
+      break;
+    }
+    case "**": {
+      res = highOrderFunc(number1, number2, power);
+      break;
+    }
+    case "**/": {
+      res = highOrderFunc(number1, number2, root);
+      break;
+    }
+    case "%": {
+      res = highOrderFunc(number1, number2, percent);
+      break;
+    }
+    default: {
+      console.log("ERROR: Калькулятор такое действие не поддерживает");
+      break;
+    }
   }
-  case "-":{
-    const resultMinus = number1 - number2;
-    console.log("Ответ: ", resultMinus);
-    break;
-  }
-  case "*":{
-    const resultMultiplication = number1 * number2;
-    console.log("Ответ: ", resultMultiplication);
-    break;
-  }
-  case "/":{
-    const resultDivision = number1 / number2;
-    console.log("Ответ: ", resultDivision);
-    break;
-  }
-  case "**":{
-    const resultPower = number1 ** number2;
-    console.log("Ответ: ", resultPower);
-    break;
-  }
-  case "**/":{
-    const resultRoot = number1 ** (1 / number2);
-    console.log("Ответ: ", resultRoot);
-    break;
-  }
-  case "%":{
-    const resultPercent = number1 * (number2 / 100);
-    console.log("Ответ: ", resultPercent);
-    break;
-  }
-  default:
-    console.log("ERROR: Калькулятор такое действие не поддерживает");
+  return res;
 }
